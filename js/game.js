@@ -6,7 +6,7 @@ const game = {
   FPS: 60,
   framesCounter: 0,
   score: 0,
-  food: [],
+  body: [],
   keys: {
     TOP: 38,
     LEFT: 37,
@@ -30,6 +30,8 @@ const game = {
       this.framesCounter++;
       this.clear();
       this.drawAll();
+      console.log(this.checkCollision(this.foods,this.player))
+      this.checkCollision(this.foods,this.player);
       this.generateFood();
       this.score += 0.01;
     }, 1000 / this.FPS);
@@ -45,7 +47,7 @@ const game = {
   drawAll() {
     this.background.draw();
     this.player.draw(this.framesCounter);
-    this.food.forEach(obs => obs.draw());
+    this.foods.forEach(obs => obs.draw());
   },
 
 //   moveAll() {
@@ -62,7 +64,7 @@ const game = {
       "..//images/background.jpeg"
     );
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
-    this.food = [];
+    this.foods = [];
   },
 
   clear() {
@@ -70,25 +72,53 @@ const game = {
   },
 
   generateFood() {
-    if (this.framesCounter % 90 == 0) {
-      this.food.push(
-        new food(
+  
+    if (this.framesCounter % 200 == 0) {
+      this.foods.push(
+        new Food(
           this.ctx,
-          this.width,
-          this.height,
-          this.player.posY0,
-          this.player.height
+          30,//width food
+          30,//height food
+          // this.player.posY0,
+          // this.player.height
         )
       );
-      console.log(this.obstacles);
+     // console.log(this.foods);
     }
   },
 
   clearFood() {
-    this.food = this.food.filter(obs => obs.posX >= 0);
+    this.foods = this.foods.filter(obs => obs.posX >= 0);
   },
 
   gameOver() {
+    alert("Game Over");
     clearInterval(this.interval);
+  },
+
+  checkCollision(arr,player){
+  
+      function isCollision(arr,player) {
+        return arr.some(obs => {
+
+          return (
+            player.posX + player.width >= obs.posX &&
+            player.posY + player.height >= obs.posY &&
+            player.posX <= obs.posX + obs.width &&
+            player.posY <= obs.posY+obs.height
+          );
+        });
+      }
+
+      return isCollision(arr,player)
+    },
+   
+
+
+  eatFood(){
+    if(checkCollision){
+      //la function que tengas que hacer
+    }
+
   }
-};
+  }

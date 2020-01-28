@@ -13,7 +13,7 @@ class Background {
       this.velX = 5;
     }
   
-    draw() { console.log("hola");
+    draw() {;
       this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
       //this.ctx.drawImage(this.image, this.posX + this.width, this.posY, this.width, this.height);
     }
