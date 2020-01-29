@@ -5,6 +5,7 @@ class Player {
     this.gameHeight = gameH;
     this.width = 10;
     this.height = 10;
+    this.direction = "right";
     this.image = new Image();
     this.image.src = "./images/player.png";
     this.posX = 20;
@@ -13,6 +14,7 @@ class Player {
     this.image.framesIndex = 0;
     this.keys = keys;
     this.setListeners();
+    this.vel = 3;
   }
 
   draw(framesCounter) {
@@ -38,7 +40,7 @@ class Player {
   }
 
   animate(framesCounter) {
-    if (framesCounter % 10 == 0) {
+    if (framesCounter % 8 == 0) {
       this.image.framesIndex++;
     }
     if (this.image.framesIndex > this.image.frames - 1) {
@@ -47,50 +49,89 @@ class Player {
   }
 
   move() {
-    
-    // if (this.posY < this.posY0) {
-    //   this.posY += this.velY;
-    //   this.velY += gravity;
-    // } else {
-    //   this.posY = this.posY0;
-    //   this.velY = 1;
-    // }
+    switch (this.direction) {
+      case "up":
+        if (this.posY <= this.height) {
+          this.posY === this.posY;
+        } else {
+          this.posY -= this.vel;
+        }
+        break;
+      case "down":
+        if (this.posY + 50 >= this.gameHeight) {
+          this.posY = this.gameHeight - 50;
+        } else {
+          this.posY += this.vel;
+        }
+        break;
+      case "right":
+        if (this.posX + 50 >= this.gameWidth) {
+          this.posX = this.gameWidth - 50;
+        } else {
+          this.posX += this.vel;
+        }
+        break;
+      case "left":
+        if (this.posX < this.width) {
+          this.posX = this.posX;
+        } else {
+          this.posX -= this.vel;
+        }
+        break;
+    }
   }
 
   setListeners() {
     document.addEventListener("keydown", e => {
       let limit = 100;
+      // switch (e.keyCode) {
+      //   case this.keys.TOP:
+      //     if (this.posY <= this.height) {
+      //       this.posY === this.posY;
+      //     } else {
+      //       this.posY -= 10;
+      //     }
+      //     break;
+
+      //   case this.keys.LEFT:
+      // if (this.posX < this.width) {
+      //   this.posX = this.posX;
+      // } else {
+      //       this.posX -= 10;
+      //     }
+      //     break;
+
+      //   case this.keys.RIGHT:
+      //     if (this.posX + 50 >= this.gameWidth) {
+      //       this.posX = this.gameWidth - 50;
+      //     } else {
+      //       this.posX += 10;
+      //     }
+      //     break;
+
+      //   case this.keys.DOWN:
+      //     if (this.posY + 50 >= this.gameHeight) {
+      //       this.posY = this.gameHeight - 50;
+      //     } else {
+      //       this.posY += 10;
+      //     }
+      //     break;
+      // }
       switch (e.keyCode) {
         case this.keys.TOP:
-          if (this.posY <= this.height) {
-            this.posY === this.posY;
-          } else {
-            this.posY -= 10;
-          }
+          this.direction = "up";
           break;
 
         case this.keys.LEFT:
-          if (this.posX < this.width) {
-            this.posX = this.posX;
-          } else {
-            this.posX -= 10;
-          }
+          this.direction = "left";
           break;
 
         case this.keys.RIGHT:
-          if (this.posX + 50 >= this.gameWidth) {
-            this.posX = this.gameWidth - 50;
-          } else {
-            this.posX += 10;
-          }
+          this.direction = "right";
           break;
 
         case this.keys.DOWN:
-          if (this.posY + 50 >= this.gameHeight) {
-            this.posY = this.gameHeight - 50;
-          } else {
-            this.posY += 10;
-          }
+          this.direction = "down";
           break;
       }
     });

@@ -37,6 +37,7 @@ const game = {
         }
       });
       this.generateFood();
+      this.player.move()
       this.score += 0.01;
     }, 1000 / this.FPS);
   },
@@ -54,11 +55,10 @@ const game = {
     this.foods.forEach(obs => obs.draw());
   },
 
-  //   moveAll() {
-  //     // this.background.move();
-  //     this.player.move();
+   moveAll() {
+     this.player.continueMove();
   //     this.food.forEach(obs => obs.move());
-  //   },
+    },
 
   reset() {
     this.background = new Background(
