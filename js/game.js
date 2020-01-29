@@ -30,8 +30,12 @@ const game = {
       this.framesCounter++;
       this.clear();
       this.drawAll();
-      console.log(this.checkCollision(this.foods,this.player))
-      this.checkCollision(this.foods,this.player);
+      console.log(this.checkCollision(this.foods, this.player));
+      this.foods.forEach((food,idx) => {
+        if(this.checkCollision(food, this.player)){
+          this.foods.splice(idx,1)
+        }
+      });
       this.generateFood();
       this.score += 0.01;
     }, 1000 / this.FPS);
@@ -50,11 +54,11 @@ const game = {
     this.foods.forEach(obs => obs.draw());
   },
 
-//   moveAll() {
-//     // this.background.move();
-//     this.player.move();
-//     this.food.forEach(obs => obs.move());
-//   },
+  //   moveAll() {
+  //     // this.background.move();
+  //     this.player.move();
+  //     this.food.forEach(obs => obs.move());
+  //   },
 
   reset() {
     this.background = new Background(
@@ -72,53 +76,43 @@ const game = {
   },
 
   generateFood() {
-  
     if (this.framesCounter % 200 == 0) {
       this.foods.push(
         new Food(
           this.ctx,
-          30,//width food
-          30,//height food
+          30, //width food
+          30 //height food
           // this.player.posY0,
           // this.player.height
         )
       );
-     // console.log(this.foods);
+      // console.log(this.foods);
     }
   },
 
-  clearFood() {
-    this.foods = this.foods.filter(obs => obs.posX >= 0);
-  },
+  // clearFood() {
+  //   this.foods = this.foods.filter(foods => foods.posX =this.player.posX);
+  // },
 
   gameOver() {
     alert("Game Over");
     clearInterval(this.interval);
   },
 
-  checkCollision(arr,player){
-  
-      function isCollision(arr,player) {
-        return arr.some(obs => {
+ 
+  checkCollision(obs, player) {
+        return (
+          obs.posX + obs.width >= player.posX &&
+          obs.posY + obs.height >= player.posY &&
+          obs.posX <= player.posX + player.width &&
+          obs.posY <= player.posY + player.height
+        );
+    
+  },
 
-          return (
-            player.posX + player.width >= obs.posX &&
-            player.posY + player.height >= obs.posY &&
-            player.posX <= obs.posX + obs.width &&
-            player.posY <= obs.posY+obs.height
-          );
-        });
-      }
-
-      return isCollision(arr,player)
-    },
-   
-
-
-  eatFood(){
-    if(checkCollision){
-      //la function que tengas que hacer
+  eatFood() {
+    if (checkCollision) {
+    this.foods.splice(obs);
     }
-
   }
-  }
+};

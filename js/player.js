@@ -3,17 +3,15 @@ class Player {
     this.ctx = ctx;
     this.gameWidth = gameW;
     this.gameHeight = gameH;
-    this.width = 100;
-    this.height = 100;
+    this.width = 10;
+    this.height = 10;
     this.image = new Image();
     this.image.src = "./images/player.png";
     this.posX = 20;
-    this.posY = this.gameHeight - this.height - 20;
-    this.posY0 = this.posY;
+    this.posY = 20;
     this.image.frames = 3;
     this.image.framesIndex = 0;
     this.keys = keys;
-    this.velY = 1;
     this.setListeners();
   }
 
@@ -40,7 +38,7 @@ class Player {
   }
 
   animate(framesCounter) {
-    if (framesCounter % 14 == 0) {
+    if (framesCounter % 10 == 0) {
       this.image.framesIndex++;
     }
     if (this.image.framesIndex > this.image.frames - 1) {
@@ -48,55 +46,50 @@ class Player {
     }
   }
 
-  // move() {
-  //   // let gravity = 0.4;
-
-  //   // if (this.posY < this.posY0) {
-  //   //   this.posY += this.velY;
-  //   //   this.velY += gravity;
-  //   // } else {
-  //   //   this.posY = this.posY0;
-  //   //   this.velY = 1;
-  //   // }
-  // }
+  move() {
+    
+    // if (this.posY < this.posY0) {
+    //   this.posY += this.velY;
+    //   this.velY += gravity;
+    // } else {
+    //   this.posY = this.posY0;
+    //   this.velY = 1;
+    // }
+  }
 
   setListeners() {
     document.addEventListener("keydown", e => {
-      let limit = 130;
+      let limit = 100;
       switch (e.keyCode) {
         case this.keys.TOP:
-          this.imagePosition = 0;
-          if (this.posY <= this.height-30) {
+          if (this.posY <= this.height) {
             this.posY === this.posY;
           } else {
-            this.posY -= 40;
+            this.posY -= 10;
           }
           break;
 
         case this.keys.LEFT:
-          this.imagePosition = 50;
           if (this.posX < this.width) {
             this.posX = this.posX;
           } else {
-            this.posX -= 40;
+            this.posX -= 10;
           }
           break;
 
         case this.keys.RIGHT:
-          this.imagePosition = 100;
-          if (this.posX > this.gameWidth - limit) {
-            this.posX === this.posX - this.width;
+          if (this.posX + 50 >= this.gameWidth) {
+            this.posX = this.gameWidth - 50;
           } else {
-            this.posX += 40;
+            this.posX += 10;
           }
           break;
 
         case this.keys.DOWN:
-          this.imagePosition = 150;
-          if (this.posY > this.gameHeight - limit) {
-            this.posY === 600 - this.height *2;
+          if (this.posY + 50 >= this.gameHeight) {
+            this.posY = this.gameHeight - 50;
           } else {
-            this.posY += 40;
+            this.posY += 10;
           }
           break;
       }
