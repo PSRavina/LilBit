@@ -8,8 +8,8 @@ class Player {
     this.direction = "right";
     this.image = new Image();
     this.image.src = "./images/player.png";
-    this.posX = 20;
-    this.posY = 20;
+    this.posX = this.gameWidth/2;
+    this.posY = this.gameHeight/2;
     this.image.frames = 3;
     this.image.framesIndex = 0;
     this.keys = keys;
@@ -32,15 +32,15 @@ class Player {
       30, //height de la imagen que vas a meter
       this.posX, // Pos X en el canvas para colocar la imagen
       this.posY, // Pos y en el canvas para colocar la imagen
-      50, // width de la imagen en el canvas
-      50 // height de la imagen en el canvas
+      30, // width de la imagen en el canvas
+      30 // height de la imagen en el canvas
     );
 
     this.animate(framesCounter);
   }
 
   animate(framesCounter) {
-    if (framesCounter % 8 == 0) {
+    if (framesCounter % 10 == 0) {
       this.image.framesIndex++;
     }
     if (this.image.framesIndex > this.image.frames - 1) {
@@ -58,15 +58,15 @@ class Player {
         }
         break;
       case "down":
-        if (this.posY + 50 >= this.gameHeight) {
-          this.posY = this.gameHeight - 50;
+        if (this.posY + 30 >= this.gameHeight) {
+          this.posY = this.gameHeight - 30;
         } else {
           this.posY += this.vel;
         }
         break;
       case "right":
-        if (this.posX + 50 >= this.gameWidth) {
-          this.posX = this.gameWidth - 50;
+        if (this.posX + 30 >= this.gameWidth) {
+          this.posX = this.gameWidth - 30;
         } else {
           this.posX += this.vel;
         }

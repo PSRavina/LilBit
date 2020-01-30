@@ -5,7 +5,8 @@ const game = {
   height: undefined,
   FPS: 60,
   framesCounter: 0,
-  score: 0,
+  time: 5,
+  score: 5,
   body: [],
   keys: {
     TOP: 38,
@@ -27,18 +28,34 @@ const game = {
       if (this.framesCounter > 5000) {
         this.framesCounter = 0;
       }
+
       this.framesCounter++;
       this.clear();
       this.drawAll();
-      console.log(this.checkCollision(this.foods, this.player));
-      this.foods.forEach((food,idx) => {
-        if(this.checkCollision(food, this.player)){
-          this.foods.splice(idx,1)
+      // console.log(this.checkCollision(this.foods, this.player));
+      this.foods.forEach((food, idx) => {
+        if (this.checkCollision(food, this.player)) {
+          this.foods.splice(idx, 1);
+          this.scoreDisplay.count += 1;
+          this.score += 1;
+          this.timeDisplay.count += 10;
+          console.log(this.scoreDisplay.count)
         }
       });
+      if (this.beers.length !== 0) {
+        this.beers.forEach((beer, idx) => {
+          if (this.checkCollision(beer, this.player)) {
+            this.gameOver();
+          }
+        });
+      }
+
+      this.wallcollision();
+      this.finalTime();
       this.generateFood();
-      this.player.move()
-      this.score += 0.01;
+      this.generateBeer();
+      this.player.move();
+      this.timeDisplay.count -= 0.01;
     }, 1000 / this.FPS);
   },
 
@@ -51,14 +68,18 @@ const game = {
 
   drawAll() {
     this.background.draw();
+    this.scoreDisplay.draw();
+    this.timeDisplay.draw();
     this.player.draw(this.framesCounter);
     this.foods.forEach(obs => obs.draw());
+    this.beers.forEach(beer => beer.draw());
   },
 
-   moveAll() {
-     this.player.continueMove();
-  //     this.food.forEach(obs => obs.move());
-    },
+  moveAll() {
+    this.player.continueMove();
+
+    //     this.food.forEach(obs => obs.move());
+  },
 
   reset() {
     this.background = new Background(
@@ -69,6 +90,15 @@ const game = {
     );
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
     this.foods = [];
+    this.beers = [];
+    this.scoreDisplay = new CounterDisplay(
+      this.ctx,
+      this.score,
+      15,
+      50,
+      "yellow"
+    );
+    this.timeDisplay = new CounterDisplay(this.ctx, this.time, 520, 55, "blue");
   },
 
   clear() {
@@ -76,7 +106,7 @@ const game = {
   },
 
   generateFood() {
-    if (this.framesCounter % 200 == 0) {
+    if (this.framesCounter % 100 == 0) {
       this.foods.push(
         new Food(
           this.ctx,
@@ -93,26 +123,39 @@ const game = {
   // clearFood() {
   //   this.foods = this.foods.filter(foods => foods.posX =this.player.posX);
   // },
+  wallcollision() {
+    if (
+      this.player.posX <= 9 ||
+      this.player.posX >= 570 ||
+      this.player.posY <= 9 ||
+      this.player.posY >= 570
+    ) {
+      this.gameOver();
+    }
+  },
 
   gameOver() {
-    alert("Game Over");
+    window.alert("Game Over");
     clearInterval(this.interval);
   },
 
- 
   checkCollision(obs, player) {
-        return (
-          obs.posX + obs.width >= player.posX &&
-          obs.posY + obs.height >= player.posY &&
-          obs.posX <= player.posX + player.width &&
-          obs.posY <= player.posY + player.height
-        );
-    
+    return (
+      obs.posX + obs.width >= player.posX &&
+      obs.posY + obs.height >= player.posY &&
+      obs.posX <= player.posX + player.width &&
+      obs.posY <= player.posY + player.height
+    );
+  },
+  generateBeer() {
+    if (this.framesCounter % 500 == 0) {
+      this.beers.push(new Beer(this.ctx, 30, 30));
+    }
   },
 
-  eatFood() {
-    if (checkCollision) {
-    this.foods.splice(obs);
+  finalTime() {
+    if (this.timeDisplay.count <= 0) {
+      this.gameOver();
     }
   }
 };

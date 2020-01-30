@@ -1,4 +1,4 @@
-class Food {
+class Beer {
   constructor(ctx, width, height) {
     const randomInt = (min, max) =>
       Math.floor(Math.random() * (max - min + 1) + min);
@@ -10,9 +10,10 @@ class Food {
     this.width = width;
     this.height = height;
     this.image = new Image();
-    this.image.src = "../images/food.png";
+    this.image.src = "./images/cervezareducida.png";
   }
-  draw(ctx) {
+  draw() {
+    console.log("deberia haber una fuckin cervesita")
     this.ctx.drawImage(
       this.image,
       0,
@@ -24,6 +25,6 @@ class Food {
       30,
       30,
       )
-   // this.ctx.drawImage(this.posX, this.posY, this.width, this.height);
+
   }
 }
