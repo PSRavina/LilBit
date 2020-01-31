@@ -13,16 +13,20 @@
             justify-content: center;
             align-items: center;
             align-self: center;
+            border-radius: 15px;
+           
+            font-style: italic;
             margin-top: auto;
             margin-left: auto;
             margin-bottom: auto;
             margin-right: auto;
-            display: block;
+            /* display: block; */
             width: auto;
-            height:auto ;
+            height:auto;
         }
 
         body {
+            border-radius: 15px;
             background-image: url("./images/ironhack.jpg");
             background-size: cover;
 
@@ -32,6 +36,7 @@
         #canvas {
             padding: 0;
             margin: auto;
+            border-radius: 15px;
             width: 600px;
             height: 600px;
             position: absolute;
@@ -44,6 +49,7 @@
         .intro{
             width:100vw;
             height:100vh;
+            border-radius: 15px;
             display:flex;
             flex-direction:column;
             justify-content: center;
@@ -51,7 +57,9 @@
             /* background-image: url("./images/beerzone.jpg");
             background-repeat: no-repeat; */
         }
-
+        .img {
+            border-radius: 15px;
+        }
         .hide{
             display:none;
         }
@@ -60,14 +68,16 @@
 
 <body>
     <div class="intro">
-        <h1> LIL BIT SNAKE MADARFAKAR</h1>
-        <img src="./images/beerzone.jpg">
+        <h1> LIL BIT SNAKE</h1>
+        <h2> Beer||Book</h2>
+        <img class = "img" src="./images/beerzone.jpg">
         <button id="start-button">StartGame</button>
     </div>
 
     <div class="game hide">
         <canvas id="canvas" width="600" height="600"></canvas>
     </div>
+    <script src="./js/sound.js"></script>
     <script src="./js/GameOverScreen.js"></script>
     <script src="./js/counter.js"></script>
     <script src="./js/food.js"></script>

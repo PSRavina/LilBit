@@ -20,6 +20,9 @@ const game = {
     this.ctx = this.canvas.getContext("2d");
     this.setDimensions();
     this.start();
+    this.sound = new Sound("./sound/09 Celadon City's Theme.mp3");
+    this.sound1 = new Sound("../sound/gameovermusic.mp3");
+    this.soundeat = new Sound("./sound/eat.mp3");
   },
 
   start() {
@@ -31,6 +34,7 @@ const game = {
 
       this.framesCounter++;
       this.clear();
+      this.sound.play();
       this.drawAll();
       // console.log(this.checkCollision(this.foods, this.player));
       this.foods.forEach((food, idx) => {
@@ -39,7 +43,7 @@ const game = {
           this.scoreDisplay.count += 1;
           this.score += 1;
           this.timeDisplay.count += 2;
-          
+          this.soundeat.play();
         }
       });
       if (this.beers.length !== 0) {
@@ -91,7 +95,7 @@ const game = {
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
     this.foods = [];
     this.beers = [];
-    this.gameover = new GameOverScreen(this.ctx, 0, 0, this.width, this.height)
+    this.gameover = new GameOverScreen(this.ctx, 0, 0, this.width, this.height);
     this.scoreDisplay = new CounterDisplay(
       this.ctx,
       this.score,
@@ -136,11 +140,11 @@ const game = {
   },
 
   gameOver() {
+    this.sound.pause ();
+    this.sound1.play ();
     this.gameover.draw();
-    setTimeout(()=>{
-      clearInterval(this.interval);
-    },3000)
-   
+    clearInterval(this.interval);
+
   },
 
   checkCollision(obs, player) {
