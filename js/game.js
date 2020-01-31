@@ -5,8 +5,8 @@ const game = {
   height: undefined,
   FPS: 60,
   framesCounter: 0,
-  time: 5,
-  score: 5,
+  time: 10,
+  score: 0,
   body: [],
   keys: {
     TOP: 38,
@@ -38,8 +38,8 @@ const game = {
           this.foods.splice(idx, 1);
           this.scoreDisplay.count += 1;
           this.score += 1;
-          this.timeDisplay.count += 10;
-          console.log(this.scoreDisplay.count)
+          this.timeDisplay.count += 2;
+          
         }
       });
       if (this.beers.length !== 0) {
@@ -49,7 +49,7 @@ const game = {
           }
         });
       }
-
+      this.ellementFully();
       this.wallcollision();
       this.finalTime();
       this.generateFood();
@@ -91,6 +91,7 @@ const game = {
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
     this.foods = [];
     this.beers = [];
+    this.gameover = new GameOverScreen(this.ctx, 0, 0, this.width, this.height)
     this.scoreDisplay = new CounterDisplay(
       this.ctx,
       this.score,
@@ -135,8 +136,11 @@ const game = {
   },
 
   gameOver() {
-    window.alert("Game Over");
-    clearInterval(this.interval);
+    this.gameover.draw();
+    setTimeout(()=>{
+      clearInterval(this.interval);
+    },3000)
+   
   },
 
   checkCollision(obs, player) {
@@ -148,13 +152,19 @@ const game = {
     );
   },
   generateBeer() {
-    if (this.framesCounter % 500 == 0) {
+    if (this.framesCounter % 350 == 0) {
       this.beers.push(new Beer(this.ctx, 30, 30));
     }
   },
 
   finalTime() {
     if (this.timeDisplay.count <= 0) {
+      this.gameOver();
+    }
+  },
+
+  ellementFully() {
+    if (this.foods.length >= 8) {
       this.gameOver();
     }
   }

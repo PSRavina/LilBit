@@ -10,7 +10,7 @@ class CounterDisplay{
       draw() {
         this.ctx.fillStyle = this.color;
         // console.log(Math.floor(this.count), "--------------");
-        this.ctx.fillText(this.count, this.posX,this.posY);
+        this.ctx.fillText(Math.floor(this.count), this.posX,this.posY);
       }
 
   }

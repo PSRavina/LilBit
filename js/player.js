@@ -12,6 +12,7 @@ class Player {
     this.posY = this.gameHeight/2;
     this.image.frames = 3;
     this.image.framesIndex = 0;
+    this.imagePosY=0;
     this.keys = keys;
     this.setListeners();
     this.vel = 3;
@@ -20,14 +21,10 @@ class Player {
   draw(framesCounter) {
     this.ctx.drawImage(
       this.image,
-      // this.image.framesIndex * Math.floor(this.image.width / this.image.frames),
-      // 0,
-      // Math.floor(this.image.width / this.image.frames),
-      // this.posX,
-      // this.posY,
+     
       this.image.framesIndex * Math.floor(this.image.width / this.image.frames),
-      0, // Pos X de la imagen que vas a meter 0
-      // Pos  Y de la imagen que vas a meter 0
+      this.imagePosY, // Pos X de la imagen que vas a meter 0
+   
       30, // width de la imagen qeu vas a meter
       30, //height de la imagen que vas a meter
       this.posX, // Pos X en el canvas para colocar la imagen
@@ -52,9 +49,10 @@ class Player {
     switch (this.direction) {
       case "up":
         if (this.posY <= this.height) {
-          this.posY === this.posY;
+          this.posY = this.posY;
         } else {
           this.posY -= this.vel;
+          this.imagePosY = 96;
         }
         break;
       case "down":
@@ -62,6 +60,7 @@ class Player {
           this.posY = this.gameHeight - 30;
         } else {
           this.posY += this.vel;
+          this.imagePosY = 0;
         }
         break;
       case "right":
@@ -69,6 +68,8 @@ class Player {
           this.posX = this.gameWidth - 30;
         } else {
           this.posX += this.vel;
+          this.imagePosY = 64;
+        
         }
         break;
       case "left":
@@ -76,6 +77,7 @@ class Player {
           this.posX = this.posX;
         } else {
           this.posX -= this.vel;
+          this.imagePosY = 32;
         }
         break;
     }
@@ -84,39 +86,7 @@ class Player {
   setListeners() {
     document.addEventListener("keydown", e => {
       let limit = 100;
-      // switch (e.keyCode) {
-      //   case this.keys.TOP:
-      //     if (this.posY <= this.height) {
-      //       this.posY === this.posY;
-      //     } else {
-      //       this.posY -= 10;
-      //     }
-      //     break;
-
-      //   case this.keys.LEFT:
-      // if (this.posX < this.width) {
-      //   this.posX = this.posX;
-      // } else {
-      //       this.posX -= 10;
-      //     }
-      //     break;
-
-      //   case this.keys.RIGHT:
-      //     if (this.posX + 50 >= this.gameWidth) {
-      //       this.posX = this.gameWidth - 50;
-      //     } else {
-      //       this.posX += 10;
-      //     }
-      //     break;
-
-      //   case this.keys.DOWN:
-      //     if (this.posY + 50 >= this.gameHeight) {
-      //       this.posY = this.gameHeight - 50;
-      //     } else {
-      //       this.posY += 10;
-      //     }
-      //     break;
-      // }
+      
       switch (e.keyCode) {
         case this.keys.TOP:
           this.direction = "up";
